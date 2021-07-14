@@ -1,4 +1,4 @@
-export default interface Members {
+export default interface Member {
   crewId: number;
   id: number;
   image: string;

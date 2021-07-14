@@ -1,6 +1,6 @@
-import Absences from "../model/absences";
+import Absence from "../model/absence";
 
-const getAbsencesDetailsMock: Absences[] = [
+const getAbsencesDetailsMock: Absence[] = [
   {
     admitterId: null,
     admitterNote: "",

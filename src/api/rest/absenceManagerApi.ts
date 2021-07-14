@@ -1,17 +1,19 @@
 import axios, { AxiosResponse } from "axios";
-import Members from "../model/members";
-import Absences from "../model/absences";
+import AbsenceListResponse from "../model/absenceListResponse";
+import MemberListResponse from "../model/memberListResponse";
+import Member from "../model/member";
+import Absence from "../model/absence";
 
 export class AbsenceManagerApi {
   private baseUrl = "http://localhost/3000/api/absencemanager";
   private membersUrl = `${this.baseUrl}/members/`;
   private absenceUrl = `${this.baseUrl}/absences/`;
 
-  getMembers(): Promise<AxiosResponse<Members>> {
-    return axios.get<Members>(`${this.membersUrl}`);
+  getMembers(): Promise<AxiosResponse<MemberListResponse>> {
+    return axios.get<MemberListResponse>(`${this.membersUrl}`);
   }
 
-  getAbsence(): Promise<AxiosResponse<Absences>> {
-    return axios.get<Absences>(`${this.absenceUrl}`);
+  getAbsence(): Promise<AxiosResponse<AbsenceListResponse>> {
+    return axios.get<AbsenceListResponse>(`${this.absenceUrl}`);
   }
 }

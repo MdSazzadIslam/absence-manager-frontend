@@ -1,5 +1,5 @@
-import Members from "../model/members";
-const GetMembersDetailsMock: Members[] = [
+import Member from "../model/member";
+const GetMembersDetailsMock: Member[] = [
   {
     crewId: 352,
     id: 709,

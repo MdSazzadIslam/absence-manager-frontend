@@ -1,4 +1,4 @@
-export default interface Absences {
+export default interface Absence {
   admitterId: null | number;
   admitterNote: string;
   confirmedAt: string | null;
