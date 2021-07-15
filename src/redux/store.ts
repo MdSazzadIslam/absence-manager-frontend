@@ -9,9 +9,10 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import AppState from "./state/appState";
 import memberReducer from "./reducers/memberReducer";
-
+import absenceReducer from "./reducers/absenceReducer";
 const rootReducer = combineReducers<AppState>({
   memberState: memberReducer,
+  absenceState: absenceReducer,
 });
 
 export default function configureStore(): Store<AppState, AnyAction> {

@@ -1,11 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 import AbsenceListResponse from "../model/absenceListResponse";
 import MemberListResponse from "../model/memberListResponse";
-import Member from "../model/member";
-import Absence from "../model/absence";
 
 export class AbsenceManagerApi {
-  private baseUrl = "http://localhost/3000/api/absencemanager";
+  private baseUrl = "http://localhost:3000/api/absencemanager";
   private membersUrl = `${this.baseUrl}/members/`;
   private absenceUrl = `${this.baseUrl}/absences/`;
 

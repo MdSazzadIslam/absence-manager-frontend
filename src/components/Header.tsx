@@ -2,9 +2,8 @@ import React from "react";
 import logo from "../assests/images/logo.png";
 import { Link } from "react-router-dom";
 import "./Header.css";
-interface Props {}
 
-const Header: React.FC<Props> = (props) => {
+const Header: React.FC = () => {
   return (
     <div className="header">
       <Link to="/">

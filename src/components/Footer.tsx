@@ -1,6 +1,6 @@
 import "./Footer.css";
-interface Props {}
-const Footer: React.FC<Props> = (props) => {
+
+const Footer: React.FC = () => {
   return (
     <div className="footer">
       <h6>Copyright &copy; {new Date().getFullYear()} Crewmeister</h6>
