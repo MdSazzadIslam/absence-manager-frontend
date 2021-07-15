@@ -1,0 +1,16 @@
+.footer {
+  background-color: #24252a;
+  margin-top: 20px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 1px;
+  height: 50px;
+}
+.footer h6 {
+  font-size: large;
+  font-weight: 400;
+  text-decoration: none;
+  color: white;
+}
