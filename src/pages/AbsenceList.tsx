@@ -21,8 +21,6 @@ const AbsenceList: React.FC<Props> = ({
 }) => {
   useEffect(() => {
     getAbsences();
-    console.log(absenceState);
-    console.log(absences);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (absenceState.isFetching) {
@@ -48,10 +46,12 @@ const AbsenceList: React.FC<Props> = ({
               <table className="table table-striped table-bordered table-list">
                 <thead>
                   <tr>
+                    <th>SL</th>
+                    <th>Name</th>
+                    <th>Image</th>
                     <th>Admitter Id</th>
                     <th>Admitter Note</th>
                     <th>Confirmed At</th>
-
                     <th>Created At</th>
                     <th>Crew Id</th>
                     <th>End Date</th>

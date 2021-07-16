@@ -11,7 +11,7 @@ const AbsenceList: React.FC = () => {
         display: "block",
       }}
     >
-      <span className="sr-only">...</span>
+      <span className="sr-only"></span>
     </Spinner>
   );
 };

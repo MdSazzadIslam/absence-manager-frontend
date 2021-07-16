@@ -14,7 +14,6 @@ const absenceReducer: Reducer<AbsenceState, AbsenceListActions> = (
   state = initialState,
   action: AbsenceListActions
 ) => {
-  debugger;
   switch (action.type) {
     case AbsenceActionTypes.GET_ABSENCE_START: {
       return {
@@ -25,9 +24,27 @@ const absenceReducer: Reducer<AbsenceState, AbsenceListActions> = (
 
     case AbsenceActionTypes.GET_ABSENCE_SUCCESS: {
       debugger;
+
+      let absenceData: any = action.absences[0];
+      let memberData: any = action.absences[1];
+
+      if (action.absences.length > 0) {
+        for (let i: number = 0; i < absenceData.length; i++) {
+          memberData.filter(function (elm: any) {
+            if (elm.userId === absenceData[i].userId) {
+              let name: string = elm.name;
+              let image: string = elm.image;
+              absenceData[i].name = name;
+              absenceData[i].image = image;
+            }
+            return absenceData;
+          });
+        }
+      }
+
       return {
         ...state,
-        absences: action.absences,
+        absences: absenceData,
         isFetching: false,
       };
     }

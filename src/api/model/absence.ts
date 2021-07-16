@@ -11,4 +11,6 @@ export default interface Absence {
   startDate: string;
   type: string;
   userId: number;
+  name: string;
+  image: string;
 }
