@@ -4,7 +4,9 @@ import AbsenceState from "../redux/state/absenceState";
 import { connect } from "react-redux";
 import AppState from "../redux/state/appState";
 import { getAbsences } from "../redux/actions/absenceActionCreator";
-
+import Loader from "../components/Loader";
+import ListRow from "../components/ListRow";
+import "./AbsenceList.css";
 interface Props {
   absences: Absence[];
   getAbsences(): void;
@@ -21,34 +23,54 @@ const AbsenceList: React.FC<Props> = ({
     getAbsences();
     console.log(absenceState);
     console.log(absences);
-  }, []);
-  return (
-    <div className="row justify-content-center">
-      <h3>Absence List</h3>
-      <div className="col-auto">
-        <table className="table table-responsive">
-          <thead className="thead-dark">
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Established</th>
-              <th scope="col">Head Quaters</th>
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-              <th scope="col">Name</th>
-              <th scope="col">Slogan</th>
-              <th scope="col">Website</th>
-              <th scope="col">Trips</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* {absences.map((absence) => (
-              <tr>
-                <td>{absence.id}</td>
-                <td>{absence.admitterId}</td>
-                <td>{absence.admitterNote}</td>
-              </tr>
-            ))} */}
-          </tbody>
-        </table>
+  if (absenceState.isFetching) {
+    return <Loader />;
+  }
+  if (absenceState.error) {
+    return <h5>something went wrong</h5>;
+  }
+
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-md-12 col-md-offset-1">
+          <div className="table table-responsive">
+            <div className="panel-heading">
+              <div className="row">
+                <div className="col col-xs-6">
+                  <h3 className="panel-title">Absence List</h3>
+                </div>
+              </div>
+            </div>
+            <div className="panel-body">
+              <table className="table table-striped table-bordered table-list">
+                <thead>
+                  <tr>
+                    <th>Admitter Id</th>
+                    <th>Admitter Note</th>
+                    <th>Confirmed At</th>
+
+                    <th>Created At</th>
+                    <th>Crew Id</th>
+                    <th>End Date</th>
+                    <th>Id</th>
+
+                    <th>MemberNote</th>
+                    <th>Rejected At</th>
+                    <th>Start Date</th>
+                    <th>Type</th>
+                    <th>UserId</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ListRow absences={absenceState.absences} />
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
