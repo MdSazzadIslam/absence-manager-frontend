@@ -1,7 +1,7 @@
-import Absences from "../../api/model/absence";
+import Absence from "../../api/model/absence";
 
 export default interface AbsenceState {
-  absences: Absences[];
+  absences: Absence[];
   isFetching: boolean;
   error?: string;
 }

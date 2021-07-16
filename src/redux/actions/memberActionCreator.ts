@@ -33,7 +33,7 @@ export const getCharacters = () => {
     dispatch(getMemberStart());
     return new AbsenceManagerApi()
       .getMembers()
-      .then((response) => dispatch(getMemberSuccess(response.data.results)))
+      .then((res) => dispatch(getMemberSuccess(res.data.members)))
       .catch((error) =>
         dispatch(getMemberFail("Could not get members: " + error.message))
       );

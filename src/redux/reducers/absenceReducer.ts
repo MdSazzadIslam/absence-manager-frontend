@@ -14,6 +14,7 @@ const absenceReducer: Reducer<AbsenceState, AbsenceListActions> = (
   state = initialState,
   action: AbsenceListActions
 ) => {
+  debugger;
   switch (action.type) {
     case AbsenceActionTypes.GET_ABSENCE_START: {
       return {
@@ -23,6 +24,7 @@ const absenceReducer: Reducer<AbsenceState, AbsenceListActions> = (
     }
 
     case AbsenceActionTypes.GET_ABSENCE_SUCCESS: {
+      debugger;
       return {
         ...state,
         absences: action.absences,

@@ -3,5 +3,5 @@ export default interface MemberListResponse {
   count: number;
   next: string;
   previous: string;
-  results: Member[];
+  members: Member[];
 }

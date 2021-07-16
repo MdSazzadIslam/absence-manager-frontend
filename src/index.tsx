@@ -12,7 +12,7 @@ const store = configureStore();
 
 ReactDOM.render(
   <React.StrictMode>
-    <App store={store} history={history} />
+    <App store={store} />
   </React.StrictMode>,
   document.getElementById("root")
 );

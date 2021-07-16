@@ -3,9 +3,9 @@ import AbsenceListResponse from "../model/absenceListResponse";
 import MemberListResponse from "../model/memberListResponse";
 
 export class AbsenceManagerApi {
-  private baseUrl = "http://localhost:3000/api/absencemanager";
-  private membersUrl = `${this.baseUrl}/members/`;
-  private absenceUrl = `${this.baseUrl}/absences/`;
+  private baseUrl = process.env.REACT_APP_API_URL;
+  private membersUrl = `${this.baseUrl}/member`;
+  private absenceUrl = `${this.baseUrl}/absence`;
 
   getMembers(): Promise<AxiosResponse<MemberListResponse>> {
     return axios.get<MemberListResponse>(`${this.membersUrl}`);

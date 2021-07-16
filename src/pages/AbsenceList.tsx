@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import Absence from "../api/model/absence";
 import AbsenceState from "../redux/state/absenceState";
 import { connect } from "react-redux";
@@ -5,12 +6,22 @@ import AppState from "../redux/state/appState";
 import { getAbsences } from "../redux/actions/absenceActionCreator";
 
 interface Props {
-  getAbsenceList(): void;
-  absenceListState: AbsenceState;
+  absences: Absence[];
+  getAbsences(): void;
+  absenceState: AbsenceState;
   // deleteHandler: (id: string) => void;
 }
 
-const AbsenceList: React.FC<Props> = (props) => {
+const AbsenceList: React.FC<Props> = ({
+  absences,
+  getAbsences,
+  absenceState,
+}) => {
+  useEffect(() => {
+    getAbsences();
+    console.log(absenceState);
+    console.log(absences);
+  }, []);
   return (
     <div className="row justify-content-center">
       <h3>Absence List</h3>
@@ -28,7 +39,15 @@ const AbsenceList: React.FC<Props> = (props) => {
               <th scope="col">Trips</th>
             </tr>
           </thead>
-          <tbody> </tbody>
+          <tbody>
+            {/* {absences.map((absence) => (
+              <tr>
+                <td>{absence.id}</td>
+                <td>{absence.admitterId}</td>
+                <td>{absence.admitterNote}</td>
+              </tr>
+            ))} */}
+          </tbody>
         </table>
       </div>
     </div>
@@ -37,13 +56,13 @@ const AbsenceList: React.FC<Props> = (props) => {
 
 const mapStateToProps = (state: AppState) => {
   return {
-    absenceListState: state.absenceState,
+    absenceState: state.absenceState,
   };
 };
 
 const mapDispatchToProps = (dispatch: Function) => {
   return {
-    getAbsenceList: () => dispatch(getAbsences()),
+    getAbsences: () => dispatch(getAbsences()),
   };
 };
 

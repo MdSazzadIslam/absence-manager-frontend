@@ -31,11 +31,13 @@ export const getAbsenceFail = (error: string): GetAbsenceFailAction => {
 };
 
 export const getAbsences = () => {
+  debugger;
   return (dispatch: Dispatch) => {
     dispatch(getAbsenceStart());
+    debugger;
     return new AbsenceManagerApi()
       .getAbsence()
-      .then((response) => dispatch(getAbsenceSuccess(response.data.results)))
+      .then((res) => dispatch(getAbsenceSuccess(res.data.absences)))
       .catch((error) =>
         dispatch(
           getAbsenceFail("Could not get absence record: " + error.message)
