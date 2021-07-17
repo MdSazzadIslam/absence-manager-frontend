@@ -12,7 +12,11 @@ const Header: React.FC = () => {
       <div className="header_container">
         <ul className="header_nav">
           <li>
-            <a href="https://github.com/MdSazzadIslam" target="_blank">
+            <a
+              href="https://github.com/MdSazzadIslam"
+              target="_blank"
+              rel="noreferrer"
+            >
               About
             </a>
           </li>

@@ -4,10 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import configureStore from "./redux/store";
-import { createBrowserHistory } from "history";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const history = createBrowserHistory();
 const store = configureStore();
 
 ReactDOM.render(

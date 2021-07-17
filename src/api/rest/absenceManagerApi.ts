@@ -8,7 +8,7 @@ export class AbsenceManagerApi {
   private absenceUrl = `${this.baseUrl}/absence`;
 
   getMembers(): Promise<AxiosResponse<MemberListResponse>> {
-    return axios.get<MemberListResponse>(`${this.membersUrl}  `);
+    return axios.get<MemberListResponse>(`${this.membersUrl}`);
   }
 
   getAbsence(
@@ -16,7 +16,7 @@ export class AbsenceManagerApi {
     page: number
   ): Promise<AxiosResponse<AbsenceListResponse>> {
     return axios.get<AbsenceListResponse>(
-      `${this.absenceUrl}` + "?page=" + `${page}` + "&limit=" + `${limit}`
+      `${this.absenceUrl}` + "/" + "?page=" + `${page}` + "&limit=" + `${limit}`
     );
   }
 
