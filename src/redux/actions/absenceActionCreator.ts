@@ -30,13 +30,13 @@ export const getAbsenceFail = (error: string): GetAbsenceFailAction => {
   };
 };
 
-export const getAbsences = () => {
+export const getAbsences = (itemsCountPerPage: number, pageNumber: number) => {
   debugger;
   return (dispatch: Dispatch) => {
     dispatch(getAbsenceStart());
     debugger;
     return new AbsenceManagerApi()
-      .getAbsence()
+      .getAbsence(itemsCountPerPage, pageNumber)
       .then((res) => dispatch(getAbsenceSuccess(res.data.absences)))
       .catch((error) =>
         dispatch(

@@ -8,26 +8,44 @@ interface Props {
 const ListRow: React.FC<Props> = (props) => {
   const { absences } = props;
   const absenceData = absences.map((absence, index) => {
+    const confimed = absence.confirmedAt;
+    const rejected = absence.rejectedAt;
+    const requested = absence.createdAt;
+    let status = "";
+
+    if (rejected != null) {
+      status = "Rejected";
+    }
+    if (confimed != null) {
+      status = "Confirmed";
+    }
+    if (requested != null && confimed == null && rejected == null) {
+      status = "Requested";
+    }
     return (
       <tr key={absence.id}>
-        <td>{index}</td>
+        <td>{index + 1}</td>
         <td>{absence.name}</td>
         <td>
           <img src={absence.image} width={50} height={50} alt="logo" />
         </td>
-        <td>{absence.admitterId}</td>
+        <td>{absence.type}</td>
+        <td>{moment(absence.startDate).format("DD/MM/YYYY")}</td>
+        <td>{moment(absence.endDate).format("DD/MM/YYYY")}</td>
         <td>{absence.admitterNote}</td>
+        <td>{status}</td>
+        <td>{absence.memberNote}</td>
+        <td>{absence.admitterId}</td>
+
         <td>{moment(absence.confirmedAt).format("DD/MM/YYYY")}</td>
         <td>{moment(absence.createdAt).format("DD/MM/YYYY")}</td>
 
         <td>{absence.crewId}</td>
-        <td>{moment(absence.endDate).format("DD/MM/YYYY")}</td>
+
         <td>{absence.id}</td>
-        <td>{absence.memberNote}</td>
 
         <td>{moment(absence.rejectedAt).format("DD/MM/YYYY")}</td>
-        <td>{moment(absence.startDate).format("DD/MM/YYYY")}</td>
-        <td>{absence.type}</td>
+
         <td>{absence.userId}</td>
       </tr>
     );

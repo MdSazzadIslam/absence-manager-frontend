@@ -12,10 +12,10 @@ const Header: React.FC = () => {
       <div className="header_container">
         <ul className="header_nav">
           <li>
-            <Link to="/product">Absence List</Link>
+            <Link to="/product">List</Link>
           </li>
           <li>
-            <Link to="/cart">Absence List with pagination</Link>
+            <Link to="/cart">Pagination</Link>
           </li>
 
           <li>
