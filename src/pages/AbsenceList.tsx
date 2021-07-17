@@ -80,98 +80,75 @@ const AbsenceList: React.FC<Props> = ({
   }
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-12 col-md-offset-1">
-          <div className="table table-responsive">
-            <div className="panel-heading">
-              <div className="row">
-                <div className="col col-xs6">
-                  <h6 className="panel-title">
-                    Absence List - Total number of absence {totalAbsent}
-                    <h6>
-                      Pagination
-                      <input
-                        type="checkbox"
-                        title="Pagination"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          chkHandleChange(e)
-                        }
-                        defaultChecked={false}
-                      />
-                    </h6>
-                  </h6>
-                </div>
+    <div className="main-content">
+      <div className="container mt-7">
+        {/* Table */}
 
-                <div className="container">
+        <div className="row">
+          <div className="col">
+            <div className="card shadow">
+              <div className="card-header border-0">
+                Pagination
+                <input
+                  type="checkbox"
+                  title="Pagination"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    chkHandleChange(e)
+                  }
+                  defaultChecked={false}
+                />
+                <h6 className="mb-0">
+                  Absence List - Total number of absence {totalAbsent}
+                </h6>
+                <div className="form-group">
                   <input
                     type="text"
                     name="searchBy"
+                    className="form-control"
                     value={searchBy}
                     placeholder="For searching please enter absence type or date(YYYY-MM-DD)"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setSearchBy(e.target.value)
                     }
                   />
-                  <button onClick={() => searchRecord()}>Search</button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => searchRecord()}
+                  >
+                    Search
+                  </button>
                 </div>
               </div>
-            </div>
-            <div className="panel-body">
-              <table className="table table-striped table-bordered table-list ">
-                <thead>
-                  <tr>
-                    <th>SL</th>
-                    <th>Name</th>
-                    <th>Image</th>
-                    <th>Type</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>MemberNote</th>
-                    <th>Status</th>
-                    <th>Admitter Note</th>
-                    <th>Admitter Id</th>
+              <div className="table-responsive">
+                <table className="table align-items-center table-flush">
+                  <thead className="thead-light">
+                    <tr>
+                      <th>SL</th>
+                      <th>Name</th>
+                      <th>Image</th>
+                      <th>Type</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>MemberNote</th>
+                      <th>Status</th>
+                      <th>Admitter Note</th>
+                      <th>Admitter Id</th>
 
-                    <th>Confirmed At</th>
-                    <th>Created At</th>
-                    <th>Crew Id</th>
+                      <th>Confirmed At</th>
+                      <th>Created At</th>
+                      <th>Crew Id</th>
 
-                    <th>Id</th>
+                      <th>Id</th>
 
-                    <th>Rejected At</th>
+                      <th>Rejected At</th>
 
-                    <th>UserId</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <ListRow absences={absenceState.absences} />
-                </tbody>
-              </table>
-              <div className="container-fluid mb-2 mt-1 ">
-                <div className="row align-items-center">
-                  <div className="col-md-4 col-sm-12">
-                    {/* <h6>
-                    Showing {this.state.currentPage} to{" "}
-                    {this.state.totalPages + " "}
-                    of {this.state.totalItems} entries
-                  </h6> */}
-                  </div>
-                  {checked ? (
-                    <div className="col-md-8 col-sm-12">
-                      <div className="float-md-right">
-                        <Pagination
-                          activePage={activePage}
-                          itemsCountPerPage={itemsCountPerPage}
-                          totalItemsCount={totalItemsCount}
-                          pageRangeDisplayed={pageRangeDisplayed}
-                          onChange={(e: number) => handlePageChange(e)}
-                          itemClass="page-item"
-                          linkClass="page-link"
-                        />
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
+                      <th>UserId</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ListRow absences={absenceState.absences} />
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
