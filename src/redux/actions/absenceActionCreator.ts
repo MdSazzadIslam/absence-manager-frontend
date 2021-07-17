@@ -5,6 +5,9 @@ import {
   GetAbsenceStartAction,
   GetAbsenceSuccessAction,
   GetAbsenceFailAction,
+  GetAbsenceByIdStartAction,
+  GetAbsenceByIdSuccessAction,
+  GetAbsenceByIdFailAction,
   AbsenceActionTypes,
 } from "./absenceAction";
 
@@ -30,6 +33,28 @@ export const getAbsenceFail = (error: string): GetAbsenceFailAction => {
   };
 };
 
+export const getAbsenceByIdStart = (): GetAbsenceByIdStartAction => {
+  return {
+    type: AbsenceActionTypes.GET_ABSENCE_BY_ID_START,
+  };
+};
+
+export const getAbsenceByIdSuccess = (
+  results: Absence[]
+): GetAbsenceByIdSuccessAction => {
+  return {
+    type: AbsenceActionTypes.GET_ABSENCE_BY_ID_SUCCESS,
+    absences: results,
+  };
+};
+
+export const getAbsenceByIdFail = (error: string): GetAbsenceByIdFailAction => {
+  return {
+    type: AbsenceActionTypes.GET_ABSENCE_BY_ID_FAIL,
+    error: error,
+  };
+};
+
 export const getAbsences = (itemsCountPerPage: number, pageNumber: number) => {
   debugger;
   return (dispatch: Dispatch) => {
@@ -41,6 +66,22 @@ export const getAbsences = (itemsCountPerPage: number, pageNumber: number) => {
       .catch((error) =>
         dispatch(
           getAbsenceFail("Could not get absence record: " + error.message)
+        )
+      );
+  };
+};
+
+export const getAbsenceById = (searchBy: string) => {
+  debugger;
+  return (dispatch: Dispatch) => {
+    dispatch(getAbsenceStart());
+    debugger;
+    return new AbsenceManagerApi()
+      .getAbsenceById(searchBy)
+      .then((res) => dispatch(getAbsenceByIdSuccess(res.data.absences)))
+      .catch((error) =>
+        dispatch(
+          getAbsenceByIdFail("Could not get absence record: " + error.message)
         )
       );
   };

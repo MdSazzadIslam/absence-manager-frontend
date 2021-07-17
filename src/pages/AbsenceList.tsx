@@ -3,7 +3,10 @@ import Absence from "../api/model/absence";
 import AbsenceState from "../redux/state/absenceState";
 import { connect } from "react-redux";
 import AppState from "../redux/state/appState";
-import { getAbsences } from "../redux/actions/absenceActionCreator";
+import {
+  getAbsences,
+  getAbsenceById,
+} from "../redux/actions/absenceActionCreator";
 import Loader from "../components/Loader";
 import ListRow from "../components/ListRow";
 import Pagination from "react-js-pagination";
@@ -11,7 +14,8 @@ import "./AbsenceList.css";
 
 interface Props {
   absences: Absence[];
-  getAbsences(itemsCountPerPage: number, pageNumber: number): void;
+  getAbsences: (itemsCountPerPage: number, pageNumber: number) => void;
+  getAbsenceById: (searchBy: string) => void;
   absenceState: AbsenceState;
   activePage: number;
   itemsCountPerPage: number;
@@ -21,7 +25,8 @@ interface Props {
   chkHandleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checked: boolean;
   totalAbsent: number;
-
+  searchBy: string;
+  searchRecord: () => void;
   // deleteHandler: (id: string) => void;
 }
 
@@ -29,6 +34,8 @@ const AbsenceList: React.FC<Props> = ({
   absences,
   getAbsences,
   absenceState,
+  searchRecord,
+  getAbsenceById,
 }) => {
   const [activePage, setActivePage] = useState(1);
   const [itemsCountPerPage, setItemsCountPerPage] = useState(10);
@@ -36,13 +43,14 @@ const AbsenceList: React.FC<Props> = ({
   const [pageRangeDisplayed, setPageRangeDisplayed] = useState(0);
   const [checked, setChecked] = useState(false);
   const [totalAbsent, setTotalAbsent] = useState(0);
+  const [searchBy, setSearchBy] = useState("");
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       await getAbsences(itemsCountPerPage, activePage);
       setTotalItemsCount(absenceState.absences.length); //total items count
       setTotalAbsent(absenceState.absences.length); //total absent count
-    }
+    };
     fetchData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -55,10 +63,13 @@ const AbsenceList: React.FC<Props> = ({
   const chkHandleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked === true) {
       setChecked(true);
+      getAbsences(10, 1);
       setPageRangeDisplayed(Math.ceil(totalItemsCount / itemsCountPerPage));
-
       setTotalItemsCount(absenceState.absences.length);
     }
+  };
+  searchRecord = async () => {
+    await getAbsenceById(searchBy);
   };
 
   if (absenceState.isFetching) {
@@ -75,7 +86,7 @@ const AbsenceList: React.FC<Props> = ({
           <div className="table table-responsive">
             <div className="panel-heading">
               <div className="row">
-                <div className="col col-xs-6">
+                <div className="col col-xs6">
                   <h6 className="panel-title">
                     Absence List - Total number of absence {totalAbsent}
                     <h6>
@@ -91,10 +102,23 @@ const AbsenceList: React.FC<Props> = ({
                     </h6>
                   </h6>
                 </div>
+
+                <div className="container">
+                  <input
+                    type="text"
+                    name="searchBy"
+                    value={searchBy}
+                    placeholder="For searching please enter absence type or date(YYYY-MM-DD)"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setSearchBy(e.target.value)
+                    }
+                  />
+                  <button onClick={() => searchRecord()}>Search</button>
+                </div>
               </div>
             </div>
             <div className="panel-body">
-              <table className="table table-striped table-bordered table-list">
+              <table className="table table-striped table-bordered table-list ">
                 <thead>
                   <tr>
                     <th>SL</th>
@@ -167,6 +191,8 @@ const mapDispatchToProps = (dispatch: Function) => {
   return {
     getAbsences: (itemsCountPerPage: number, pageNumber: number) =>
       dispatch(getAbsences(itemsCountPerPage, pageNumber)),
+
+    getAbsenceById: (searchBy: string) => dispatch(getAbsenceById(searchBy)),
   };
 };
 

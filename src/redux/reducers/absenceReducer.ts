@@ -28,7 +28,7 @@ const absenceReducer: Reducer<AbsenceState, AbsenceListActions> = (
       let absenceData: any = action.absences[0];
       let memberData: any = action.absences[1];
 
-      if (action.absences.length > 0) {
+      if (absenceData.length > 0 && memberData.length > 0) {
         for (let i: number = 0; i < absenceData.length; i++) {
           memberData.filter(function (elm: any) {
             if (elm.userId === absenceData[i].userId) {
@@ -56,6 +56,49 @@ const absenceReducer: Reducer<AbsenceState, AbsenceListActions> = (
         error: action.error,
       };
     }
+
+    case AbsenceActionTypes.GET_ABSENCE_BY_ID_START: {
+      return {
+        ...state,
+        isFetching: true,
+      };
+    }
+
+    case AbsenceActionTypes.GET_ABSENCE_BY_ID_SUCCESS: {
+      debugger;
+
+      let absenceData: any = action.absences[0];
+      let memberData: any = action.absences[1];
+
+      if (absenceData.length > 0 && memberData.length > 0) {
+        for (let i: number = 0; i < absenceData.length; i++) {
+          memberData.filter(function (elm: any) {
+            if (elm.userId === absenceData[i].userId) {
+              let name: string = elm.name;
+              let image: string = elm.image;
+              absenceData[i].name = name;
+              absenceData[i].image = image;
+            }
+            return absenceData;
+          });
+        }
+      }
+
+      return {
+        ...state,
+        absences: absenceData,
+        isFetching: false,
+      };
+    }
+
+    case AbsenceActionTypes.GET_ABSENCE_BY_ID_FAIL: {
+      return {
+        ...state,
+        isFetching: false,
+        error: action.error,
+      };
+    }
+
     default:
       return state;
   }

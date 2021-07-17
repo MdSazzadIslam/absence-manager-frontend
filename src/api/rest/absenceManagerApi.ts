@@ -17,7 +17,15 @@ export class AbsenceManagerApi {
   ): Promise<AxiosResponse<AbsenceListResponse>> {
     debugger;
     return axios.get<AbsenceListResponse>(
-      `${this.absenceUrl}` + "?limit=" + `${limit}` + "?page=" + `${page}`
+      `${this.absenceUrl}` + "?page=" + `${page}` + "?limit=" + `${limit}`
+    );
+  }
+
+  getAbsenceById(
+    searchBy: string
+  ): Promise<AxiosResponse<AbsenceListResponse>> {
+    return axios.get<AbsenceListResponse>(
+      `${this.absenceUrl}` + "/" + `${searchBy}`
     );
   }
 }
