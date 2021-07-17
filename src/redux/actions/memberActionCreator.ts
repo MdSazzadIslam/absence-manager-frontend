@@ -28,9 +28,10 @@ export const getMemberFail = (error: string): GetMemberFailAction => {
   };
 };
 
-export const getCharacters = () => {
+export const getMembers = () => {
   return (dispatch: Dispatch) => {
     dispatch(getMemberStart());
+    debugger;
     return new AbsenceManagerApi()
       .getMembers()
       .then((res) => dispatch(getMemberSuccess(res.data.members)))

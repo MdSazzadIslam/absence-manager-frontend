@@ -5,7 +5,7 @@ import React, {
   useEffect,
   KeyboardEvent,
 } from "react";
-import Absence from "../api/model/absence";
+
 import AbsenceState from "../redux/state/absenceState";
 import { connect } from "react-redux";
 import AppState from "../redux/state/appState";
@@ -217,6 +217,7 @@ const AbsenceList: React.FC<PropsType> = ({
 const mapStateToProps = (state: AppState) => {
   return {
     absenceState: state.absenceState,
+    memberState: state.memberState,
   };
 };
 
@@ -224,7 +225,6 @@ const mapDispatchToProps = (dispatch: Function) => {
   return {
     getAbsences: (itemsCountPerPage: number, pageNumber: number) =>
       dispatch(getAbsences(itemsCountPerPage, pageNumber)),
-
     getAbsenceById: (searchBy: string) => dispatch(getAbsenceById(searchBy)),
   };
 };

@@ -20,6 +20,7 @@ const memberReducer: Reducer<MemberState, MemberListActions> = (
     }
 
     case MemberActionTypes.GET_MEMBER_SUCCESS: {
+      debugger;
       return {
         ...state,
         members: action.members,
