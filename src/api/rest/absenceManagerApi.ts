@@ -15,9 +15,8 @@ export class AbsenceManagerApi {
     limit: number,
     page: number
   ): Promise<AxiosResponse<AbsenceListResponse>> {
-    debugger;
     return axios.get<AbsenceListResponse>(
-      `${this.absenceUrl}` + "?page=" + `${page}` + "?limit=" + `${limit}`
+      `${this.absenceUrl}` + "?page=" + `${page}` + "&limit=" + `${limit}`
     );
   }
 

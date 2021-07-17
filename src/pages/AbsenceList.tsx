@@ -38,7 +38,7 @@ const AbsenceList: React.FC<Props> = ({
   getAbsenceById,
 }) => {
   const [activePage, setActivePage] = useState(1);
-  const [itemsCountPerPage, setItemsCountPerPage] = useState(10);
+  const [itemsCountPerPage, setItemsCountPerPage] = useState(0);
   const [totalItemsCount, setTotalItemsCount] = useState(0);
   const [pageRangeDisplayed, setPageRangeDisplayed] = useState(0);
   const [checked, setChecked] = useState(false);
@@ -47,7 +47,7 @@ const AbsenceList: React.FC<Props> = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      await getAbsences(itemsCountPerPage, activePage);
+      await getAbsences(0, activePage);
       setTotalItemsCount(absenceState.absences.length); //total items count
       setTotalAbsent(absenceState.absences.length); //total absent count
     };
@@ -63,9 +63,13 @@ const AbsenceList: React.FC<Props> = ({
   const chkHandleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked === true) {
       setChecked(true);
-      getAbsences(10, 1);
-      setPageRangeDisplayed(Math.ceil(totalItemsCount / itemsCountPerPage));
+      setItemsCountPerPage(10);
+      await getAbsences(10, 1);
+      setPageRangeDisplayed(Math.ceil(10 / 10));
       setTotalItemsCount(absenceState.absences.length);
+    } else {
+      setChecked(false);
+      await getAbsences(0, activePage);
     }
   };
   searchRecord = async () => {
@@ -95,7 +99,7 @@ const AbsenceList: React.FC<Props> = ({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     chkHandleChange(e)
                   }
-                  defaultChecked={false}
+                  defaultChecked={checked}
                 />
                 <h6 className="mb-0">
                   Absence List - Total number of absence {totalAbsent}
@@ -149,6 +153,32 @@ const AbsenceList: React.FC<Props> = ({
                     <ListRow absences={absenceState.absences} />
                   </tbody>
                 </table>
+                <div className="container-fluid mb-2 mt-1 ">
+                  <div className="row align-items-center">
+                    <div className="col-md-4 col-sm-12">
+                      {/* <h6>
+                    Showing {this.state.currentPage} to{" "}
+                    {this.state.totalPages + " "}
+                    of {this.state.totalItems} entries
+                  </h6> */}
+                    </div>
+                    {checked ? (
+                      <div className="col-md-8 col-sm-12">
+                        <div className="float-md-right">
+                          <Pagination
+                            activePage={activePage}
+                            itemsCountPerPage={itemsCountPerPage}
+                            totalItemsCount={totalItemsCount}
+                            pageRangeDisplayed={pageRangeDisplayed}
+                            onChange={(e: number) => handlePageChange(e)}
+                            itemClass="page-item"
+                            linkClass="page-link"
+                          />
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

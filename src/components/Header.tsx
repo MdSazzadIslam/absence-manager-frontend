@@ -12,14 +12,9 @@ const Header: React.FC = () => {
       <div className="header_container">
         <ul className="header_nav">
           <li>
-            <Link to="/product">List</Link>
-          </li>
-          <li>
-            <Link to="/cart">Pagination</Link>
-          </li>
-
-          <li>
-            <Link to="/about">About</Link>
+            <a href="https://github.com/MdSazzadIslam" target="_blank">
+              About
+            </a>
           </li>
         </ul>
       </div>
