@@ -17,7 +17,17 @@ const Header: React.FC = () => {
               target="_blank"
               rel="noreferrer"
             >
-              About
+              GitHub
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="https://sazzad-islam-88.vercel.app/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Portfolio
             </a>
           </li>
         </ul>

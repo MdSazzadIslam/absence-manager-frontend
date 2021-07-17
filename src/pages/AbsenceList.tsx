@@ -1,4 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useState,
+  useEffect,
+  KeyboardEvent,
+} from "react";
 import Absence from "../api/model/absence";
 import AbsenceState from "../redux/state/absenceState";
 import { connect } from "react-redux";
@@ -12,68 +18,89 @@ import ListRow from "../components/ListRow";
 import Pagination from "react-js-pagination";
 import "./AbsenceList.css";
 
-interface Props {
-  absences: Absence[];
-  getAbsences: (itemsCountPerPage: number, pageNumber: number) => void;
-  getAbsenceById: (searchBy: string) => void;
-  absenceState: AbsenceState;
+type StateType = {
   activePage: number;
   itemsCountPerPage: number;
   totalItemsCount: number;
   pageRangeDisplayed: number;
-  onChange: (pageNumber: number) => void;
-  chkHandleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checked: boolean;
   totalAbsent: number;
   searchBy: string;
-  searchRecord: () => void;
-  // deleteHandler: (id: string) => void;
-}
+};
 
-const AbsenceList: React.FC<Props> = ({
-  absences,
-  getAbsences,
+type PropsType = {
+  absenceState: AbsenceState;
+  getAbsences: (itemsCountPerPage: number, pageNumber: number) => void;
+  getAbsenceById: (searchBy: string) => void;
+};
+
+const AbsenceList: React.FC<PropsType> = ({
   absenceState,
-  searchRecord,
+  getAbsences,
   getAbsenceById,
 }) => {
-  const [activePage, setActivePage] = useState(1);
-  const [itemsCountPerPage, setItemsCountPerPage] = useState(0);
-  const [totalItemsCount, setTotalItemsCount] = useState(0);
-  const [pageRangeDisplayed, setPageRangeDisplayed] = useState(0);
-  const [checked, setChecked] = useState(false);
-  const [totalAbsent, setTotalAbsent] = useState(0);
-  const [searchBy, setSearchBy] = useState("");
-
+  const [absence, setAbsence] = useState<StateType>({
+    activePage: 1,
+    itemsCountPerPage: 0,
+    totalItemsCount: 0,
+    pageRangeDisplayed: 0,
+    checked: false,
+    totalAbsent: 0,
+    searchBy: "",
+  });
   useEffect(() => {
     const fetchData = async () => {
-      await getAbsences(0, activePage);
-      setTotalItemsCount(absenceState.absences.length); //total items count
-      setTotalAbsent(absenceState.absences.length); //total absent count
+      await getAbsences(0, absence.activePage);
+      setAbsence({
+        ...absence,
+        totalItemsCount: absenceState.absences.length,
+        totalAbsent: absenceState.absences.length,
+      });
     };
     fetchData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handlePageChange = async (pageNumber: number) => {
-    setActivePage(pageNumber);
-    await getAbsences(itemsCountPerPage, pageNumber);
-    setTotalItemsCount(absenceState.absences.length);
+    await getAbsences(absence.itemsCountPerPage, pageNumber);
+    setAbsence({
+      ...absence,
+      activePage: pageNumber,
+      totalItemsCount: absenceState.absences.length,
+    });
   };
 
   const chkHandleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked === true) {
-      setChecked(true);
-      setItemsCountPerPage(10);
       await getAbsences(10, 1);
-      setPageRangeDisplayed(Math.ceil(10 / 10));
-      setTotalItemsCount(absenceState.absences.length);
+      setAbsence({
+        ...absence,
+        itemsCountPerPage: 10,
+        pageRangeDisplayed: Math.ceil(10 / 10),
+        totalItemsCount: absenceState.absences.length,
+      });
     } else {
-      setChecked(false);
-      await getAbsences(0, activePage);
+      await getAbsences(0, absence.activePage);
     }
   };
-  searchRecord = async () => {
-    await getAbsenceById(searchBy);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const { value, name } = e.target;
+    setAbsence({
+      ...absence,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
+    e.preventDefault();
+    await getAbsenceById(absence.searchBy);
+  };
+
+  const handleKeyChange = async (e: KeyboardEvent): Promise<void> => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      await getAbsences(0, absence.activePage);
+    }
   };
 
   if (absenceState.isFetching) {
@@ -82,7 +109,7 @@ const AbsenceList: React.FC<Props> = ({
   if (absenceState.error) {
     return <h5>something went wrong</h5>;
   }
-
+  const { checked, totalAbsent, searchBy } = absence;
   return (
     <div className="main-content">
       <div className="container mt-7">
@@ -91,38 +118,43 @@ const AbsenceList: React.FC<Props> = ({
         <div className="row">
           <div className="col">
             <div className="card shadow">
-              <div className="card-header border-0">
-                Pagination
-                <input
-                  type="checkbox"
-                  title="Pagination"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    chkHandleChange(e)
-                  }
-                  defaultChecked={checked}
-                />
-                <h6 className="mb-0">
-                  Absence List - Total number of absence {totalAbsent}
-                </h6>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    name="searchBy"
-                    className="form-control"
-                    value={searchBy}
-                    placeholder="For searching please enter absence type or date(YYYY-MM-DD)"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setSearchBy(e.target.value)
-                    }
-                  />
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => searchRecord()}
-                  >
-                    Search
-                  </button>
+              <form className="sign-up-form" onSubmit={handleSubmit}>
+                <div className="card-header border-0">
+                  Pagination
+                  <>
+                    <input
+                      type="checkbox"
+                      title="Pagination"
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        chkHandleChange(e)
+                      }
+                      defaultChecked={checked}
+                    />
+                  </>
+                  <h6 className="mb-0">
+                    Absence List - Total number of absence {totalAbsent}
+                  </h6>
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      name="searchBy"
+                      className="form-control"
+                      value={searchBy}
+                      placeholder="For searching please enter absence type or date(YYYY-MM-DD)"
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        handleChange(e)
+                      }
+                      onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                        handleKeyChange(e)
+                      }
+                    />
+                    <button className="btn btn-primary" type="submit">
+                      Search
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </form>
+
               <div className="table-responsive">
                 <table className="table align-items-center table-flush">
                   <thead className="thead-light">
@@ -155,21 +187,15 @@ const AbsenceList: React.FC<Props> = ({
                 </table>
                 <div className="container-fluid mb-2 mt-1 ">
                   <div className="row align-items-center">
-                    <div className="col-md-4 col-sm-12">
-                      {/* <h6>
-                    Showing {this.state.currentPage} to{" "}
-                    {this.state.totalPages + " "}
-                    of {this.state.totalItems} entries
-                  </h6> */}
-                    </div>
-                    {checked ? (
+                    <div className="col-md-4 col-sm-12"></div>
+                    {absence.checked ? (
                       <div className="col-md-8 col-sm-12">
                         <div className="float-md-right">
                           <Pagination
-                            activePage={activePage}
-                            itemsCountPerPage={itemsCountPerPage}
-                            totalItemsCount={totalItemsCount}
-                            pageRangeDisplayed={pageRangeDisplayed}
+                            activePage={absence.activePage}
+                            itemsCountPerPage={absence.itemsCountPerPage}
+                            totalItemsCount={absence.totalItemsCount}
+                            pageRangeDisplayed={absence.pageRangeDisplayed}
                             onChange={(e: number) => handlePageChange(e)}
                             itemClass="page-item"
                             linkClass="page-link"

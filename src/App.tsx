@@ -8,11 +8,11 @@ import AppState from "./redux/state/appState";
 
 import { BrowserRouter as Router } from "react-router-dom";
 
-interface Props {
+type PropsType = {
   store: Store<AppState>;
-}
+};
 
-const App: React.FC<Props> = ({ store }) => {
+const App: React.FC<PropsType> = ({ store }) => {
   return (
     <Provider store={store}>
       <Router>

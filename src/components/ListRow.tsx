@@ -1,11 +1,10 @@
 import Absence from "../api/model/absence";
 import moment from "moment";
 
-interface Props {
+type PropsType = {
   absences: Absence[];
-  // deleteHandler: (id: string) => void;
-}
-const ListRow: React.FC<Props> = (props) => {
+};
+const ListRow: React.FC<PropsType> = (props) => {
   const { absences } = props;
   const absenceData = absences.map((absence, index) => {
     const confimed = absence.confirmedAt;
@@ -36,16 +35,11 @@ const ListRow: React.FC<Props> = (props) => {
         <td>{status}</td>
         <td>{absence.memberNote}</td>
         <td>{absence.admitterId}</td>
-
         <td>{moment(absence.confirmedAt).format("YYYY-MM-DD")}</td>
         <td>{moment(absence.createdAt).format("YYYY-MM-DD")}</td>
-
         <td>{absence.crewId}</td>
-
         <td>{absence.id}</td>
-
         <td>{moment(absence.rejectedAt).format("YYYY-MM-DD")}</td>
-
         <td>{absence.userId}</td>
       </tr>
     );
