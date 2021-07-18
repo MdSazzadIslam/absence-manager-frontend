@@ -14,7 +14,7 @@
 - You can filer by using types of absence or start date, end date, confirmed date, and rejected date.
 - there is a pagination checkbox at the top of the table when you select the checkbox will see 10 records with pagination.
 - If an error occurs then the "something went wrong" message will pop up.
-- 
+
 ## Features
 
 - [ ] I want to see a list of absences including the names of the employees.
