@@ -15,16 +15,16 @@ export class AbsenceManagerApi {
     limit: number,
     page: number
   ): Promise<AxiosResponse<AbsenceListResponse>> {
+    const params1 = "/?page=";
+    const params2 = "&limit=";
     return axios.get<AbsenceListResponse>(
-      `${this.absenceUrl}` + "/" + "?page=" + `${page}` + "&limit=" + `${limit}`
+      `${this.absenceUrl}` + params1 + `${page}` + params2 + `${limit}`
     );
   }
 
   getAbsenceById(
     searchBy: string
   ): Promise<AxiosResponse<AbsenceListResponse>> {
-    return axios.get<AbsenceListResponse>(
-      `${this.absenceUrl}` + "/" + `${searchBy}`
-    );
+    return axios.get<AbsenceListResponse>(`${this.absenceUrl}/${searchBy}`);
   }
 }
