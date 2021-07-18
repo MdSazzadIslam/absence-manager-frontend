@@ -13,21 +13,11 @@ const Header: React.FC = () => {
         <ul className="header_nav">
           <li>
             <a
-              href="https://github.com/MdSazzadIslam"
+              href="https://github.com/MdSazzadIslam/absence-manager-frontend"
               target="_blank"
               rel="noreferrer"
             >
               GitHub
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="https://sazzad-islam-88.vercel.app/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Portfolio
             </a>
           </li>
         </ul>

@@ -69,17 +69,28 @@ const AbsenceList: React.FC<PropsType> = ({
     });
   };
 
+  const fetchAbsenceReocrd = async (limit: number, page: number) => {
+    await getAbsences(limit, page);
+  };
+
   const chkHandleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked === true) {
-      await getAbsences(10, 1);
+      fetchAbsenceReocrd(10, 1);
       setAbsence({
         ...absence,
+        checked: true,
         itemsCountPerPage: 10,
         pageRangeDisplayed: Math.ceil(10 / 10),
         totalItemsCount: absenceState.absences.length,
       });
     } else {
-      await getAbsences(0, absence.activePage);
+      fetchAbsenceReocrd(0, absence.activePage);
+      //await getAbsences(0, absence.activePage);
+      setAbsence({
+        ...absence,
+        checked: false,
+        activePage: 1,
+      });
     }
   };
 
@@ -113,8 +124,6 @@ const AbsenceList: React.FC<PropsType> = ({
   return (
     <div className="main-content">
       <div className="container mt-7">
-        {/* Table */}
-
         <div className="row">
           <div className="col">
             <div className="card shadow">

@@ -1,5 +1,5 @@
 export default interface Absence {
-  admitterId: null | number;
+  admitterId: null | number; //union type cause i found null and number both absence.json file
   admitterNote: string;
   confirmedAt: string | null;
   createdAt: string;
