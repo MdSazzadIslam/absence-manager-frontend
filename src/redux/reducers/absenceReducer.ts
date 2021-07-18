@@ -26,7 +26,8 @@ const absenceReducer: Reducer<AbsenceState, AbsenceListActions> = (
       debugger;
 
       let absenceData: any = action.absences[0];
-      let memberData: any = action.absences[1];
+      //let noOfAbsent: any = action.absences[1];
+      let memberData: any = action.absences[2];
 
       if (absenceData.length > 0 && memberData.length > 0) {
         for (let i: number = 0; i < absenceData.length; i++) {

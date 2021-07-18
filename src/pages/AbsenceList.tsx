@@ -49,6 +49,7 @@ const AbsenceList: React.FC<PropsType> = ({
     searchBy: "",
   });
   useEffect(() => {
+    console.log(absenceState);
     const fetchData = async () => {
       await getAbsences(0, absence.activePage);
       setAbsence({
@@ -85,7 +86,6 @@ const AbsenceList: React.FC<PropsType> = ({
       });
     } else {
       fetchAbsenceReocrd(0, absence.activePage);
-      //await getAbsences(0, absence.activePage);
       setAbsence({
         ...absence,
         checked: false,
@@ -226,7 +226,6 @@ const AbsenceList: React.FC<PropsType> = ({
 const mapStateToProps = (state: AppState) => {
   return {
     absenceState: state.absenceState,
-    memberState: state.memberState,
   };
 };
 

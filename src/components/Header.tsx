@@ -12,13 +12,7 @@ const Header: React.FC = () => {
       <div className="header_container">
         <ul className="header_nav">
           <li>
-            <a
-              href="https://github.com/MdSazzadIslam/absence-manager-frontend"
-              target="_blank"
-              rel="noreferrer"
-            >
-              GitHub
-            </a>
+            <Link to="/about">About</Link>
           </li>
         </ul>
       </div>

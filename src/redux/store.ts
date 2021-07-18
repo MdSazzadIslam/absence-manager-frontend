@@ -6,9 +6,14 @@ import rootReducer from "./reducers/rootReducer";
 import logger from "redux-logger";
 
 export default function configureStore(): Store<AppState, AnyAction> {
+  let log: any;
+  if (process.env.NODE_ENV === "development") {
+    log = logger;
+  }
+
   return createStore(
     rootReducer,
     undefined,
-    composeWithDevTools(applyMiddleware(thunk, logger))
+    composeWithDevTools(applyMiddleware(thunk, log))
   );
 }
