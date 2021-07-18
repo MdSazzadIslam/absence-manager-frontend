@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+Absence Manager App - Frontend Coding Challenge
 
 ## Tech
 - React
