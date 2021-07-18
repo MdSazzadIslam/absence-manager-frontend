@@ -1,4 +1,4 @@
-Absence Manager App - Frontend Coding Challenge
+## Absence Manager App - Frontend Coding Challenge
 
 ## Tech
 - React
